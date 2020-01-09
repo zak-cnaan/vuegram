@@ -3,7 +3,8 @@ import App from "./App";
 import router from "./router";
 import { store } from "./store.js";
 const fb = require("./firebaseConfig.js");
-import './assets/styles.scss'
+//import './assets/styles.scss'
+import vuetify from "./plugins/vuetify";
 
 Vue.config.productionTip = false;
 
@@ -15,6 +16,7 @@ fb.auth.onAuthStateChanged(() => {
       el: "#app",
       router,
       store,
+      vuetify,
       render: h => h(App)
     });
   }

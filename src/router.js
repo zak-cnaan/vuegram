@@ -1,6 +1,6 @@
 import Vue from "vue";
 import Router from "vue-router";
-import firebase from 'firebase'
+import firebase from "firebase";
 
 import Login from "@/views/Login";
 import Dashboard from "@/views/Dashboard";
@@ -14,6 +14,12 @@ const router = new Router({
     {
       path: "*",
       redirect: "/dashboard"
+    },
+    {
+      path: "/",
+      name: "Home",
+      component: () =>
+        import(/* webpackChunkName: "about" */ "./views/Home.vue")
     },
     {
       path: "/login",
@@ -37,6 +43,26 @@ const router = new Router({
       meta: {
         requiresAuth: true
       }
+    },
+    {
+      path: "/plants",
+      name: "Plants",
+      component: () =>
+        import(/* webpackChunkName: "about" */ "./views/plants/plants.vue"),
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: "/addEditPlant/:id?",
+      name: "Add Edit Plant",
+      component: () =>
+        import(
+          /* webpackChunkName: "about" */ "./views/plants/addEditPlant.vue"
+        ),
+      meta: {
+        requiresAuth: true
+      }
     }
   ]
 });
@@ -46,11 +72,11 @@ router.beforeEach((to, from, next) => {
   const currentUser = firebase.auth().currentUser;
 
   if (requiresAuth && !currentUser) {
-      next('/login')
+    next("/login");
   } else if (requiresAuth && currentUser) {
-      next()
+    next();
   } else {
-      next()
+    next();
   }
 });
 

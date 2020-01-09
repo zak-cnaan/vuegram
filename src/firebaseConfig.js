@@ -27,6 +27,7 @@ const currentUser = auth.currentUser;
 // firebase collections
 const usersCollection = db.collection("users");
 const postsCollection = db.collection("posts");
+const treesCollection = db.collection("trees");
 const commentsCollection = db.collection("comments");
 const likesCollection = db.collection("likes");
 
@@ -36,6 +37,7 @@ export {
   currentUser,
   usersCollection,
   postsCollection,
+  treesCollection,
   commentsCollection,
   likesCollection
 };
