@@ -52,6 +52,33 @@ const router = new Router({
       meta: {
         requiresAuth: true
       }
+    },{
+      path: "/strains", // GET index
+      name: "Strains",
+      component: () =>
+        import(/* webpackChunkName: "about" */ "./views/strains/list.vue"),
+      meta: {
+        requiresAuth: true
+      }
+    },
+    
+    {
+      path: "/strains/edit/:id?", // EDIT by Id or ADD
+      name: "Strains",
+      component: () =>
+        import(/* webpackChunkName: "about" */ "./views/strains/edit.vue"),
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: "/strains/:id", // GET one by id
+      name: "Strains",
+      component: () =>
+        import(/* webpackChunkName: "about" */ "./views/strains/single.vue"),
+      meta: {
+        requiresAuth: true
+      }
     },
     {
       path: "/addEditPlant/:id?",

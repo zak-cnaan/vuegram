@@ -4,7 +4,7 @@
       ref="form"
       v-model="valid">
 <v-text-field
-      v-model="strain"
+      v-model="formData.strain"
       label="strain"
       placeholder=" "
       required
@@ -13,7 +13,7 @@
     ></v-text-field>
 
     <v-text-field
-      v-model="name"
+      v-model="formData.name"
       label="Name"
       placeholder=" "
     ></v-text-field>
@@ -28,13 +28,15 @@
         >
           <template v-slot:activator="{ on }">
             <v-text-field
-              v-model="date1"
+            :value="dateFormattedMomentjs(formData.date1)"
               label="Date 1"
               readonly
+              clearable
+              @click:clear="formData.date1 = null"
               v-on="on"
             ></v-text-field>
           </template>
-          <v-date-picker v-model="date1" @input="menu1 = false"></v-date-picker>
+          <v-date-picker v-model="formData.date1" @input="menu1 = false"></v-date-picker>
         </v-menu>
 
 
@@ -48,13 +50,15 @@
         >
           <template v-slot:activator="{ on }">
             <v-text-field
-              v-model="date2"
+            :value="dateFormattedMomentjs(formData.date2)"
               label="Date 2"
               readonly
+              clearable
+              @click:clear="formData.date2 = null"
               v-on="on"
             ></v-text-field>
           </template>
-          <v-date-picker v-model="date2" @input="menu2 = false"></v-date-picker>
+          <v-date-picker v-model="formData.date2" @input="menu2 = false"></v-date-picker>
         </v-menu>
 
          <v-menu
@@ -67,15 +71,15 @@
         >
           <template v-slot:activator="{ on }">
             <v-text-field
-            :value="dateFormattedMomentjs(date3)"
+            :value="dateFormattedMomentjs(formData.date3)"
               label="Date 3"
               readonly
               clearable
-              @click:clear="date3 = null"
+              @click:clear="formData.date3 = null"
               v-on="on"
             ></v-text-field>
           </template>
-          <v-date-picker v-model="date3" @input="menu3 = false"></v-date-picker>
+          <v-date-picker v-model="formData.date3" @input="menu3 = false"></v-date-picker>
         </v-menu>
 
         <v-btn
@@ -99,48 +103,48 @@ const fb = require("@/firebaseConfig.js");
 export default {
   data: () => ({
     valid: false,
-    name: '',
-    strain: '',
       nameRules: [
         v => !!v || 'Name is required',
         v => (v && v.length <= 10) || 'Name must be less than 10 characters',
       ],
-    date1: new Date().toISOString().substr(0, 10),
-    menu1: false,
-    date2: null,
-    menu2: false,
-    date3: null,
-    menu3: false,
+      menu1: false,
+      menu2: false,
+      menu3: false,
+      docId: null,
+    formData: {
+
+      name: '',
+      strain: '',
+      date1: new Date().toISOString().substr(0, 10),
+      date2: null,
+      date3: null,
+      
+      
+    }
   }),
   mounted() {
    if(this.$route.params.id){
+     this.docId = this.$route.params.id;
      this.getTree();
    };
   },
   methods: {
-    getTree: (() => {
-      var self = this;
+    getTree: (function () {
+      // var self = this;
+      // var self2 = this.$route;
+      //     debugger;
       fb.treesCollection
-        .doc("0ty4KhOqbk6xEPgbkz9H")
+        .doc(this.$route.params.id)
         .get()
         .then(ref => {
           //this.post.content = "";
+          if (!ref.exists) return;
           let data = ref.data();
-
-          console.log(data.date1)
-          console.log(this.date1)
-
-          self.date1 = data.date1;
-          self.date2 = data.date2;
-          self.date3 = data.date3;
-          self.date4 = data.date4;
-          self.date5 = data.date5;
-          self.date6 = data.date6;
+          this.formData = data;
+          // console.log(data.date1)
+          // console.log(this.date1)
 
 
-
-
-          // debugger;
         })
         .catch(err => {
           console.log(err);
@@ -159,18 +163,31 @@ export default {
         if (!this.valid) return;
         let obj = {}
 
-        obj.strain = this.strain;
-        obj.name = this.name;
-        obj.date1 = this.date1;
-        obj.date2 = this.date2;
-        obj.date3 = this.date3;
+        // obj.strain = this.strain;
+        // obj.name = this.name;
+        // obj.date1 = this.date1;
+        // obj.date2 = this.date2;
+        // obj.date3 = this.date3;
 
-        obj.date4 = new Date(this.date1);
-        obj.date5 = new Date(this.date2);
-        obj.date6 = new Date(this.date3);
+        // obj.date4 = new Date(this.date1);
+        // obj.date5 = new Date(this.date2);
+        // obj.date6 = new Date(this.date3);
 
-        fb.treesCollection
-        .add(obj)
+        obj= this.formData;
+
+        let collection;
+
+        if (this.docId){
+          collection = fb.treesCollection.doc(this.docId)
+
+        }
+        else{
+          collection = fb.treesCollection.doc()
+
+        }
+
+        collection
+        .set(obj)
         .then(ref => {
           //this.post.content = "";
           debugger;
@@ -183,9 +200,9 @@ export default {
       }
   },
   computed: {
-      computedDateFormattedMomentjs () {
-        return this.date3 ? moment(this.date3).format('ddd, D.M.YYYY') : ''
-      },
+      // computedDateFormattedMomentjs () {
+      //   return this.date3 ? moment(this.date3).format('ddd, D.M.YYYY') : ''
+      // },
     },
 };
 </script>

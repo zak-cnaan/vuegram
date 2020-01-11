@@ -52,7 +52,9 @@ export default {
         icon: "mdi-contact-mail",
         title: "Add Edit Plant",
         link: "/addEditPlant"
-      }
+      },
+      { icon: "mdi-contact-mail", title: "Strains", link: "/strains" },
+
     ]
   })
 };

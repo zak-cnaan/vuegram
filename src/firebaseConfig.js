@@ -28,6 +28,7 @@ const currentUser = auth.currentUser;
 const usersCollection = db.collection("users");
 const postsCollection = db.collection("posts");
 const treesCollection = db.collection("trees");
+const strainsCollection = db.collection("strains");
 const commentsCollection = db.collection("comments");
 const likesCollection = db.collection("likes");
 
@@ -38,6 +39,7 @@ export {
   usersCollection,
   postsCollection,
   treesCollection,
+  strainsCollection,
   commentsCollection,
   likesCollection
 };
