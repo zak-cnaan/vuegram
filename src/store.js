@@ -28,7 +28,8 @@ export const store = new Vuex.Store({
   state: {
     currentUser: null,
     userProfile: {},
-    posts: []
+    posts: [],
+    strains: []
   },
   actions: {
     clearData({ commit }) {
@@ -46,23 +47,39 @@ export const store = new Vuex.Store({
           console.log(err);
         });
     },
-    fetchPosts() {
-      fb.postsCollection
-        .orderBy("createdOn", "desc")
+    fetchStrains() {
+      fb.strainsCollection
         .get()
         .then(querySnapshot => {
-          let postsArray = [];
+          let strainsArray = [];
 
           querySnapshot.forEach(doc => {
             let post = doc.data();
             post.id = doc.id;
-            postsArray.push(post);
+            strainsArray.push(post);
           });
 
-          store.commit("setPosts", postsArray);
+          store.commit("setStrains", strainsArray);
         });
-    }
+    
   },
+  fetchPosts() {
+    fb.postsCollection
+      .orderBy("createdOn", "desc")
+      .get()
+      .then(querySnapshot => {
+        let postsArray = [];
+
+        querySnapshot.forEach(doc => {
+          let post = doc.data();
+          post.id = doc.id;
+          postsArray.push(post);
+        });
+
+        store.commit("setPosts", postsArray);
+      });
+  }
+},
   mutations: {
     setCurrentUser(state, val) {
       state.currentUser = val;
@@ -72,6 +89,9 @@ export const store = new Vuex.Store({
     },
     setPosts(state, val) {
       state.posts = val;
+    },
+    setStrains(state, val) {
+      state.strains = val;
     }
   }
 });

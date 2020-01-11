@@ -64,7 +64,7 @@ const router = new Router({
     
     {
       path: "/strains/edit/:id?", // EDIT by Id or ADD
-      name: "Strains",
+      name: "Strains - Edit",
       component: () =>
         import(/* webpackChunkName: "about" */ "./views/strains/edit.vue"),
       meta: {
@@ -73,7 +73,7 @@ const router = new Router({
     },
     {
       path: "/strains/:id", // GET one by id
-      name: "Strains",
+      name: "Strain - Single",
       component: () =>
         import(/* webpackChunkName: "about" */ "./views/strains/single.vue"),
       meta: {
