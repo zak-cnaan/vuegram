@@ -16,7 +16,7 @@
           dark
           small
           color="secondary"
-          :to="{ name: 'Strains - Edit', params: { id: docId } }"
+          :to="{ name: 'trees - Edit', params: { id: docId } }"
         >
           <v-icon dark>mdi-pencil</v-icon>
         </v-btn>
@@ -74,7 +74,7 @@ export default {
       this.dialog = false;
       this.$store.commit("setLoadingCounter", "ADD");
 
-      var collectionRef = "strainsCollection";
+      var collectionRef = "treesCollection";
 
       fb[collectionRef]
         .doc(this.$route.params.id)
@@ -82,7 +82,7 @@ export default {
         .then(ref => {
           this.$store.commit("setLoadingCounter", "remove");
 
-          this.$router.push("/strains");
+          this.$router.push("/trees");
         })
         .catch(err => {
           this.$store.commit("setLoadingCounter", "remove");
@@ -92,7 +92,7 @@ export default {
     getDocById: function() {
       this.$store.commit("setLoadingCounter", "ADD");
 
-      var collectionRef = "strainsCollection";
+      var collectionRef = "treesCollection";
 
       fb[collectionRef]
         .doc(this.$route.params.id)

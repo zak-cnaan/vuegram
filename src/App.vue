@@ -26,8 +26,8 @@
     <v-content>
       <v-container fluid>
         <v-overlay :value="overlay">
-      <v-progress-circular indeterminate size="64"></v-progress-circular>
-    </v-overlay>
+          <v-progress-circular indeterminate size="64"></v-progress-circular>
+        </v-overlay>
         <router-view></router-view>
       </v-container>
     </v-content>
@@ -52,18 +52,13 @@ export default {
       { icon: "mdi-contact-mail", title: "Dashboard", link: "/dashboard" },
       { icon: "mdi-contact-mail", title: "Settings", link: "/settings" },
       { icon: "mdi-contact-mail", title: "Login", link: "/login" },
-      { icon: "mdi-contact-mail", title: "Plants", link: "/plants" },
-      {
-        icon: "mdi-contact-mail",
-        title: "Add Edit Plant",
-        link: "/addEditPlant"
-      },
+      { icon: "mdi-contact-mail", title: "Trees", link: "/trees" },
       { icon: "mdi-contact-mail", title: "Strains", link: "/strains" },
-
+      { icon: "mdi-contact-mail", title: "Rooms", link: "/rooms" },
     ]
   }),
   computed: {
     ...mapState(["overlay"])
-  },
+  }
 };
 </script>

@@ -47,7 +47,7 @@ export default {
     getDocById: function() {
       this.$store.commit("setLoadingCounter", "ADD");
 
-      var collectionRef = "strainsCollection";
+      var collectionRef = "roomsCollection";
 
       fb[collectionRef]
         .doc(this.$route.params.id)
@@ -80,7 +80,7 @@ export default {
       obj = this.formData;
 
       let collection;
-      var collectionRef = "strainsCollection";
+      var collectionRef = "roomsCollection";
 
       if (this.docId) {
         collection = fb[collectionRef].doc(this.docId);
@@ -94,7 +94,7 @@ export default {
         .set(obj)
         .then(() => {
           this.$store.commit("setLoadingCounter", "remove");
-          this.$router.push({ path: `/strains/${collection.id}` });
+          this.$router.push({ path: `/rooms/${collection.id}` });
         })
         .catch(err => {
           console.log(err);

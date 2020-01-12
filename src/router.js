@@ -44,15 +44,38 @@ const router = new Router({
         requiresAuth: true
       }
     },
+
+    
     {
-      path: "/plants",
-      name: "Plants",
+      path: "/trees", // GET index
+      name: "trees",
       component: () =>
-        import(/* webpackChunkName: "about" */ "./views/plants/plants.vue"),
+        import(/* webpackChunkName: "about" */ "./views/trees/list.vue"),
       meta: {
         requiresAuth: true
       }
-    },{
+    },
+
+    {
+      path: "/trees/edit/:id?", // EDIT by Id or ADD
+      name: "trees - Edit",
+      component: () =>
+        import(/* webpackChunkName: "about" */ "./views/trees/edit.vue"),
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: "/trees/:id", // GET one by id
+      name: "trees - Single",
+      component: () =>
+        import(/* webpackChunkName: "about" */ "./views/trees/single.vue"),
+      meta: {
+        requiresAuth: true
+      }
+    },
+   
+    {
       path: "/strains", // GET index
       name: "Strains",
       component: () =>
@@ -61,7 +84,7 @@ const router = new Router({
         requiresAuth: true
       }
     },
-    
+
     {
       path: "/strains/edit/:id?", // EDIT by Id or ADD
       name: "Strains - Edit",
@@ -80,13 +103,31 @@ const router = new Router({
         requiresAuth: true
       }
     },
+
     {
-      path: "/addEditPlant/:id?",
-      name: "Add Edit Plant",
+      path: "/rooms", // GET index
+      name: "rooms",
       component: () =>
-        import(
-          /* webpackChunkName: "about" */ "./views/plants/addEditPlant.vue"
-        ),
+        import(/* webpackChunkName: "about" */ "./views/rooms/list.vue"),
+      meta: {
+        requiresAuth: true
+      }
+    },
+
+    {
+      path: "/rooms/edit/:id?", // EDIT by Id or ADD
+      name: "rooms - Edit",
+      component: () =>
+        import(/* webpackChunkName: "about" */ "./views/rooms/edit.vue"),
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: "/rooms/:id", // GET one by id
+      name: "rooms - Single",
+      component: () =>
+        import(/* webpackChunkName: "about" */ "./views/rooms/single.vue"),
       meta: {
         requiresAuth: true
       }

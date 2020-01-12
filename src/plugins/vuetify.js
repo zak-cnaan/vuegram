@@ -10,6 +10,6 @@ export default new Vuetify({
     dark: false
   },
   icons: {
-    iconfont: 'mdi', // default - only for display purposes
+    iconfont: "mdi" // default - only for display purposes
   }
 });

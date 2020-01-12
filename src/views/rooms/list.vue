@@ -3,7 +3,7 @@
     <v-card
       class="mb-2"
       outlined
-      v-for="formData in strains"
+      v-for="formData in rooms"
       :key="formData.id"
       elevation="2"
     >
@@ -22,7 +22,7 @@
           dark
           small
           color="secondary"
-          :to="{ name: 'Strain - Single', params: { id: formData.id } }"
+          :to="{ name: 'rooms - Single', params: { id: formData.id } }"
         >
           <v-icon dark>mdi-eye</v-icon>
         </v-btn>
@@ -36,7 +36,7 @@
       absolute
       bottom
       right
-      :to="{ path: '/strains/edit' }"
+      :to="{ path: '/rooms/edit' }"
     >
       <v-icon>mdi-plus</v-icon>
     </v-btn>
@@ -51,10 +51,10 @@ export default {
     return {};
   },
   mounted() {
-    this.$store.dispatch("fetchStrains");
+    this.$store.dispatch("fetchRooms");
   },
   computed: {
-    ...mapState(["strains"])
+    ...mapState(["rooms"])
   },
   methods: {}
 };
