@@ -29,7 +29,8 @@ export const store = new Vuex.Store({
     currentUser: null,
     userProfile: {},
     posts: [],
-    strains: []
+    strains: [],
+    overlay: 0
   },
   actions: {
     clearData({ commit }) {
@@ -48,6 +49,7 @@ export const store = new Vuex.Store({
         });
     },
     fetchStrains() {
+    store.commit("setLoadingCounter", "ADD");
       fb.strainsCollection
         .get()
         .then(querySnapshot => {
@@ -60,10 +62,13 @@ export const store = new Vuex.Store({
           });
 
           store.commit("setStrains", strainsArray);
+          store.commit("setLoadingCounter", "remove");
+
         });
     
   },
   fetchPosts() {
+    
     fb.postsCollection
       .orderBy("createdOn", "desc")
       .get()
@@ -81,6 +86,13 @@ export const store = new Vuex.Store({
   }
 },
   mutations: {
+    setLoadingCounter(state, val) {
+      if (val == "ADD")
+        state.overlay = state.overlay + 1;
+        else{
+          state.overlay = state.overlay - 1;
+        }
+    },
     setCurrentUser(state, val) {
       state.currentUser = val;
     },

@@ -15,11 +15,12 @@
       <v-card-actions>
       <v-spacer></v-spacer>
 
-        <v-btn fab dark small color="secondary">
+        <v-btn  fab dark small color="secondary"
+        :to="{ name: 'Strains - Edit', params: { id: docId }}">
       <v-icon dark>mdi-pencil</v-icon>
     </v-btn>
 
-    <v-btn fab dark small color="error">
+    <v-btn @click.stop="dialog = true" fab dark small color="error">
       <v-icon dark>mdi-delete</v-icon>
     </v-btn>
 
@@ -29,6 +30,39 @@
 
 
     </v-card>
+
+    <v-dialog
+      v-model="dialog"
+      max-width="290"
+    >
+      <v-card dark>
+        <v-card-title class="headline">Delete?</v-card-title>
+
+        <v-card-text>
+          {{formData.name}}
+        </v-card-text>
+
+        <v-card-actions>
+          <v-spacer></v-spacer>
+
+          <v-btn
+            color="error"
+            text
+            @click="dialog = false"
+          >
+            No!
+          </v-btn>
+
+          <v-btn
+            color="success"
+            text
+            @click="handleDelete"
+          >
+            Delete
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   
   </div>
 </template>
@@ -39,6 +73,7 @@ const fb = require("@/firebaseConfig.js");
 export default {
   data: () => ({
       docId: null,
+      dialog: false,
     formData: {
 
       name: '',
@@ -53,7 +88,29 @@ export default {
    };
   },
   methods: {
+    handleDelete () {
+      this.dialog = false;
+      this.$store.commit("setLoadingCounter", "ADD");
+
+      
+      var collectionRef = "strainsCollection";
+
+      fb[collectionRef]
+        .doc(this.$route.params.id)
+        .delete()
+        .then(ref => {
+      this.$store.commit("setLoadingCounter", "remove");
+
+          this.$router.push('/strains');
+
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
     getDocById: (function () {
+      this.$store.commit("setLoadingCounter", "ADD");
+
       var collectionRef = "strainsCollection";
 
       fb[collectionRef]
@@ -67,6 +124,9 @@ export default {
           } 
           let data = ref.data();
           this.formData = data;
+
+      this.$store.commit("setLoadingCounter", "remove");
+
           // console.log(data.date1)
           // console.log(this.date1)
 

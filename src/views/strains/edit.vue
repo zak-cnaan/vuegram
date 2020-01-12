@@ -55,6 +55,8 @@ export default {
   },
   methods: {
     getDocById: (function () {
+      this.$store.commit("setLoadingCounter", "ADD");
+
       var collectionRef = "strainsCollection";
 
       fb[collectionRef]
@@ -68,6 +70,7 @@ export default {
           } 
           let data = ref.data();
           this.formData = data;
+          this.$store.commit("setLoadingCounter", "remove");
           // console.log(data.date1)
           // console.log(this.date1)
 
@@ -101,11 +104,13 @@ export default {
 
         }
 
+        this.$store.commit("setLoadingCounter", "ADD");
+
         collection
         .set(obj)
-        .then(ref => {
-          //this.post.content = "";
-          debugger;
+        .then(() => {
+          this.$store.commit("setLoadingCounter", "remove");
+          this.$router.push({ path: `/strains/${collection.id}` })
         })
         .catch(err => {
           console.log(err);

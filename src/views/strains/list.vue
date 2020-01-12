@@ -23,6 +23,18 @@
 
           
           </v-card>
+
+          <v-btn
+                  color="secondary"
+                  fab
+                  dark
+                  absolute
+                  bottom
+                  right
+                  :to="{path: '/strains/edit'}"
+                >
+                  <v-icon>mdi-plus</v-icon>
+                </v-btn>
     </div>
 </template>
 

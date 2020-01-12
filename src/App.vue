@@ -25,6 +25,9 @@
 
     <v-content>
       <v-container fluid>
+        <v-overlay :value="overlay">
+      <v-progress-circular indeterminate size="64"></v-progress-circular>
+    </v-overlay>
         <router-view></router-view>
       </v-container>
     </v-content>
@@ -35,6 +38,8 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
+
 export default {
   props: {
     source: String
@@ -56,6 +61,9 @@ export default {
       { icon: "mdi-contact-mail", title: "Strains", link: "/strains" },
 
     ]
-  })
+  }),
+  computed: {
+    ...mapState(["overlay"])
+  },
 };
 </script>
