@@ -1,18 +1,14 @@
 <template>
   <div>
     <v-form ref="form" v-model="valid">
-      <v-text-field
-        v-model="formData.strain"
-        label="strain"
-        placeholder=" "
-        required
-        :rules="nameRules"
-      ></v-text-field>
+     
 
       <v-text-field
         v-model="formData.name"
         label="Name"
         placeholder=" "
+        required
+        :rules="nameRules"
       ></v-text-field>
 
       <v-menu
@@ -87,6 +83,24 @@
         ></v-date-picker>
       </v-menu>
 
+      <v-select
+          :key="(item) => item.id"
+          :items="rooms"
+          :item-text="(item) => item.name"
+          :item-value="(item) => item.id"
+          label="Room"
+          v-model='formData.roomId'
+        ></v-select>
+
+        <v-select
+          :key="(item) => item.id"
+          :items="strains"
+          :item-text="(item) => item.name"
+          :item-value="(item) => item.id"
+          label="Strain"
+          v-model='formData.strainId'
+        ></v-select>
+
       <v-btn
         :disabled="!valid"
         color="secondary"
@@ -96,11 +110,21 @@
         send
       </v-btn>
     </v-form>
+   
+
   </div>
 </template>
 
+<style>
+.v-select-list.v-card{
+  background: #fff;
+}
+</style>
+
 <script>
+import { mapState } from "vuex";
 import moment from "moment";
+
 const fb = require("@/firebaseConfig.js");
 
 export default {
@@ -116,17 +140,23 @@ export default {
     docId: null,
     formData: {
       name: "",
-      strain: "",
       date1: new Date().toISOString().substr(0, 10),
       date2: null,
-      date3: null
+      date3: null,
+      roomId: null,
+      strainId: null,
     }
   }),
   mounted() {
+    this.$store.dispatch("fetchRooms");
+    this.$store.dispatch("fetchStrains");
     if (this.$route.params.id) {
       this.docId = this.$route.params.id;
       this.getDocById();
     }
+  },
+  computed: {
+    ...mapState(["strains", "rooms"])
   },
   methods: {
     getDocById: function() {
@@ -188,11 +218,6 @@ export default {
           console.log(err);
         });
     }
-  },
-  computed: {
-    // computedDateFormattedMomentjs () {
-    //   return this.date3 ? moment(this.date3).format('ddd, D.M.YYYY') : ''
-    // },
   }
 };
 </script>
