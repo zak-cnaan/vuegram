@@ -11,7 +11,8 @@
         {{ formData.name }}
       </v-card-title>
       <v-card-text>
-        {{ formData.description }}
+        {{ formData.date1 }}<br />
+       
       </v-card-text>
 
       <v-card-actions>

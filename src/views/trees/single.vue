@@ -5,7 +5,13 @@
         {{ formData.name }}
       </v-card-title>
       <v-card-text>
-        {{ formData.description }}
+        {{ formData.date1 }}<br />
+        {{ formData.date2 }}<br />
+        {{ formData.date3 }}<br />
+        {{ formData.date4 }}<br />
+        {{ formData.date5 }}<br />
+        {{ formData.roomId }}<br />
+        {{ formData.strainId }}<br />
       </v-card-text>
 
       <v-card-actions>
