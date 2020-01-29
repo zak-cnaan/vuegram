@@ -6,13 +6,17 @@
       </v-card-title>
       <v-card-text>
         {{ formData.date1 }}<br />
+        {{ "germinationTime: " + germinationTime + " Days old." }}<br />
         {{ formData.date2 }}<br />
         {{ formData.date3 }}<br />
         {{ formData.date4 }}<br />
         {{ formData.date5 }}<br />
+        {{ formData.date6 }}<br />
         {{ formData.roomId }}<br />
         {{ formData.strainId }}<br />
         {{ formData.time + " Days" }}<br />
+        {{ stage }}<br />
+        {{ stageName }}<br />
       </v-card-text>
 
       <v-card-actions>
@@ -60,6 +64,7 @@
 
 <script>
 const fb = require("@/firebaseConfig.js");
+import moment from 'moment'
 
 export default {
   data: () => ({
@@ -130,6 +135,29 @@ export default {
     // computedDateFormattedMomentjs () {
     //   return this.date3 ? moment(this.date3).format('ddd, D.M.YYYY') : ''
     // },
+    stage (){ // returns 1-6 representing 1-6 stage dates
+      let i = 1;
+      let ret;
+      for (let i = 1; i <= 6;++i){
+        if (this.formData[("date"+i)])
+          ret = i;
+      }
+      return ret;
+
+    },
+    stageName(){
+      let arr = ["Ger", "Veg", "Flower", "Dry", "Cure", "Done!"]
+      return arr[this.stage - 1];
+    },
+    germinationTime(){
+      var currDate = moment(this.formData.date1);
+  var dateToTest = this.formData.date2 ? moment(this.formData.date2):moment.now();
+  // if dateToTest will always be in past, use currDate as the base to diff, else 
+  //be prepared to handle the negative outcomes. 
+  var result = currDate.diff(dateToTest, 'days')
+
+      return -result;
+    }
   }
 };
 </script>
