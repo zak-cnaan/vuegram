@@ -2,15 +2,7 @@
   <div>
     <v-form ref="form" v-model="valid">
 
-      <v-text-field
-        v-model="formData.name"
-        label="Name"
-        placeholder=" "
-        @input="$v.formData.name.$touch()"
-        @blur="$v.formData.name.$touch()"
-        :rules="formRules.name"
-      >
-      </v-text-field>
+     
 
       
 
@@ -135,13 +127,31 @@
         ></v-date-picker>
       </v-menu>
 
-      <v-select
-          :items="rooms"
-          :item-text="(item) => item.name"
-          :item-value="(item) => item.id"
-          label="Room"
-          v-model='formData.roomId'
-        ></v-select>
+      <v-menu
+        v-model="menu6"
+        :close-on-content-click="false"
+        :nudge-right="40"
+        transition="scale-transition"
+        offset-y
+        min-width="290px"
+      >
+        <template v-slot:activator="{ on }">
+          <v-text-field
+            :value="dateFormattedMomentjs(formData.date6)"
+            label="Date 6"
+            readonly
+            clearable
+            @click:clear="formData.date6 = null"
+            v-on="on"
+          ></v-text-field>
+        </template>
+        <v-date-picker
+          v-model="formData.date6"
+          @input="menu6 = false"
+        ></v-date-picker>
+      </v-menu>
+
+    
 
         <v-select
           :items="strains"
@@ -149,6 +159,31 @@
           :item-value="(item) => item.id"
           label="Strain"
           v-model='formData.strainId'
+          :rules="formRules.strain"
+        ></v-select>
+
+        <v-text-field
+        v-model="formData.time"
+        label="Time"
+        placeholder=" "
+        
+      >
+      </v-text-field>
+
+         <v-text-field
+        v-model="formData.name"
+        label="Name"
+        placeholder=" "
+        :rules="[]"
+      >
+      </v-text-field>
+
+        <v-select
+          :items="rooms"
+          :item-text="(item) => item.name"
+          :item-value="(item) => item.id"
+          label="Room"
+          v-model='formData.roomId'
         ></v-select>
 
       <v-btn
@@ -185,20 +220,26 @@ export default {
     menu3: false,
     menu4: false,
     menu5: false,
+    menu6: false,
     docId: null,
     formRules: {
       name: [
         v => !!v || 'Name is required',
         v => (v && v.length <= 10) || 'Name must be less than 10 characters',
+      ],
+      strain: [
+        v => !!v || 'Strain is required',
       ]
     },
     formData: {
       name: "",
+      time: "",
       date1: new Date().toISOString().substr(0, 10),
       date2: null,
       date3: null,
       date4: null,
       date5: null,
+      date6: null,
       roomId: null,
       strainId: null,
     }
