@@ -12,6 +12,7 @@
         {{ formData.date5 }}<br />
         {{ formData.roomId }}<br />
         {{ formData.strainId }}<br />
+        {{ formData.time + " Days" }}<br />
       </v-card-text>
 
       <v-card-actions>

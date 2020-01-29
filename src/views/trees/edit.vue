@@ -260,7 +260,7 @@ export default {
     setTime: function(select) {
       let t;
       t = this.strains.find(x => x.id === select);
-      this.formData.time = t.time;
+      this.formData.time = t.time || "";
     },
     getDocById: function() {
       this.$store.commit("setLoadingCounter", "ADD");
