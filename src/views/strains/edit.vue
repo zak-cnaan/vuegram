@@ -8,6 +8,14 @@
       ></v-text-field>
 
       <v-text-field
+        v-model="formData.time"
+        label="Time"
+        type="number"
+        suffix="Days"
+        placeholder=" "
+      ></v-text-field>
+
+      <v-text-field
         v-model="formData.description"
         label="Description"
         placeholder=" "
@@ -34,6 +42,7 @@ export default {
     docId: null,
     formData: {
       name: "",
+      time: "",
       description: ""
     }
   }),

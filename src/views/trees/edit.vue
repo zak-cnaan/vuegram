@@ -160,6 +160,7 @@
           label="Strain"
           v-model='formData.strainId'
           :rules="formRules.strain"
+          @change="setTime"
         ></v-select>
 
         <v-text-field
@@ -256,6 +257,11 @@ export default {
     ...mapState(["strains", "rooms"])
   },
   methods: {
+    setTime: function(select) {
+      let t;
+      t = this.strains.find(x => x.id === select);
+      this.formData.time = t.time;
+    },
     getDocById: function() {
       this.$store.commit("setLoadingCounter", "ADD");
 
