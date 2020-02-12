@@ -3,52 +3,42 @@
     <v-card outlined elevation="2">
       <v-card-title>{{ formData.name }}</v-card-title>
       <v-card-text>
-        {{ formData.date1 }}
-        <br />
-        {{ "germinationTime: " + germinationTime + " Days old." }}
-        <br />
-        {{ formData.date2 }}
-        <br />
-        {{ "veggingTime: " + veggingTime + " Days old." }}
-        <br />
-        {{ "growTime: " + growTime + " Days old." }}
-        <br />
+        <div v-if="formData.date1">{{ "Date1: " + formData.date1 }}</div>
+        <div
+          v-if="germinationTime != null"
+        >{{ "germinationTime: " + germinationTime + " Days old." }}</div>
+        <div v-if="formData.date2">{{ "Date2: " + formData.date2 }}</div>
+        <div v-if="veggingTime != null">{{ "veggingTime: " + veggingTime + " Days old." }}</div>
+        <div v-if="growTime != null">{{ "growTime: " + growTime + " Days old." }}</div>
         <hr />
 
-        {{ formData.date3 }}
-        <br />
-        {{ "floweringTime: " + floweringTime + " Days old." }}
-        <br />
-        {{ "timeToHarvest: in " + timeToHarvest + " Days." }}
-        <br />
-        {{ "aliveTime: " + aliveTime + " Days old." }}
-        <br />
+        <div v-if="formData.date3">{{ "Date3: " + formData.date3 }}</div>
+        <div v-if="floweringTime != null">{{ "floweringTime: " + floweringTime + " Days old." }}</div>
+        <div v-if="formData.time != ''">{{ "timeToHarvest: in " + timeToHarvest + " Days." }}</div>
+        <div v-if="aliveTime != null">{{ "aliveTime: " + aliveTime + " Days old." }}</div>
         <hr />
 
-        {{ formData.date4 }}
-        <br />
-        {{ "dryingTime: " + dryingTime + " Days old." }}
-        <br />
-        {{ formData.date5 }}
-        <br />
-        {{ "curingTime: " + curingTime + " Days old." }}
-        <br />
-        {{ formData.date6 }}
-        <hr />
+        <div v-if="formData.date4">{{ "Date4: " + formData.date4 }}</div>
+        <div v-if="dryingTime != null">{{ "dryingTime: " + dryingTime + " Days old." }}</div>
+        <div v-if="formData.date5">{{ "Date5: " + formData.date5 }}</div>
+        <div v-if="curingTime != null">{{ "curingTime: " + curingTime + " Days old." }}</div>
+        <div v-if="formData.date6">{{ "Date6: " + formData.date6 }}</div>
 
+        <div
+          v-if="formData.roomId"
+        >{{ "Room name: " + (rooms.find(x => x.id === formData.roomId) ? rooms.find(x => x.id === formData.roomId).name : "" )}}</div>
 
-        {{ "Room name: " + rooms.find(x => x.id === formData.roomId).name }}
-        <br />
-        {{ "Strain name: " + strains.find(x => x.id === formData.strainId).name }}
-        <br />
-        
+        <div
+          v-if="formData.strainId"
+        >{{ "Strain name: " + (strains.find(x => x.id === formData.strainId) ? strains.find(x => x.id === formData.strainId).name : "" )}}</div>
 
-        {{ "Flowering time: " + formData.time + " Days." }}
-        <br />
-        {{ "stage: " + stage }}
-        <br />
-        {{ "stageName: " + stageName }}
-        <br />
+        <div v-if="formData.time">{{ "Time: " + formData.time + " Days." }}</div>
+
+        <div>
+          {{ "stage: " + stage }}
+          <br />
+          {{ "stageName: " + stageName }}
+        </div>
       </v-card-text>
 
       <v-card-actions>
@@ -161,7 +151,7 @@ export default {
   },
   computed: {
     // computedDateFormattedMomentjs () {
-      //   return this.date3 ? moment(this.date3).format('ddd, D.M.YYYY') : ''
+    //   return this.date3 ? moment(this.date3).format('ddd, D.M.YYYY') : ''
     // },
     ...mapState(["strains", "rooms"]),
     stage() {
@@ -244,7 +234,9 @@ export default {
       return this.germinationTime * 1 + this.veggingTime * 1;
     },
     aliveTime() {
-      return this.germinationTime * 1 + this.veggingTime * 1 + this.floweringTime * 1;
+      return (
+        this.germinationTime * 1 + this.veggingTime * 1 + this.floweringTime * 1
+      );
     }
   }
 };
