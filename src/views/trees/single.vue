@@ -34,11 +34,15 @@
         {{ "curingTime: " + curingTime + " Days old." }}
         <br />
         {{ formData.date6 }}
+        <hr />
+
+
+        {{ "Room name: " + rooms.find(x => x.id === formData.roomId).name }}
         <br />
-        {{ formData.roomId }}
+        {{ "Strain name: " + strains.find(x => x.id === formData.strainId).name }}
         <br />
-        {{ formData.strainId }}
-        <br />
+        
+
         {{ "Flowering time: " + formData.time + " Days." }}
         <br />
         {{ "stage: " + stage }}
@@ -86,6 +90,7 @@
 
 <script>
 const fb = require("@/firebaseConfig.js");
+import { mapState } from "vuex";
 import moment from "moment";
 
 export default {
@@ -98,6 +103,8 @@ export default {
     }
   }),
   mounted() {
+    this.$store.dispatch("fetchRooms");
+    this.$store.dispatch("fetchStrains");
     if (this.$route.params.id) {
       this.docId = this.$route.params.id;
       this.getDocById();
@@ -154,8 +161,9 @@ export default {
   },
   computed: {
     // computedDateFormattedMomentjs () {
-    //   return this.date3 ? moment(this.date3).format('ddd, D.M.YYYY') : ''
+      //   return this.date3 ? moment(this.date3).format('ddd, D.M.YYYY') : ''
     // },
+    ...mapState(["strains", "rooms"]),
     stage() {
       // returns 1-6 representing 1-6 stage dates
       let i = 1;
