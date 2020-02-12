@@ -11,11 +11,27 @@
         <br />
         {{ "veggingTime: " + veggingTime + " Days old." }}
         <br />
+        {{ "growTime: " + growTime + " Days old." }}
+        <br />
+        <hr />
+
         {{ formData.date3 }}
         <br />
+        {{ "floweringTime: " + floweringTime + " Days old." }}
+        <br />
+        {{ "timeToHarvest: in " + timeToHarvest + " Days." }}
+        <br />
+        {{ "aliveTime: " + aliveTime + " Days old." }}
+        <br />
+        <hr />
+
         {{ formData.date4 }}
         <br />
+        {{ "dryingTime: " + dryingTime + " Days old." }}
+        <br />
         {{ formData.date5 }}
+        <br />
+        {{ "curingTime: " + curingTime + " Days old." }}
         <br />
         {{ formData.date6 }}
         <br />
@@ -23,11 +39,11 @@
         <br />
         {{ formData.strainId }}
         <br />
-        {{ formData.time + " Days" }}
+        {{ "Flowering time: " + formData.time + " Days." }}
         <br />
-        {{ stage }}
+        {{ "stage: " + stage }}
         <br />
-        {{ stageName }}
+        {{ "stageName: " + stageName }}
         <br />
       </v-card-text>
 
@@ -176,6 +192,51 @@ export default {
       var result = currDate.diff(dateToTest, "days");
 
       return -result;
+    },
+    floweringTime() {
+      if (!this.formData.date3) return null;
+      var currDate = moment(this.formData.date3);
+      var dateToTest = this.formData.date4
+        ? moment(this.formData.date4)
+        : moment.now();
+      // if dateToTest will always be in past, use currDate as the base to diff, else
+      //be prepared to handle the negative outcomes.
+      var result = currDate.diff(dateToTest, "days");
+
+      return -result;
+    },
+    dryingTime() {
+      if (!this.formData.date4) return null;
+      var currDate = moment(this.formData.date4);
+      var dateToTest = this.formData.date5
+        ? moment(this.formData.date5)
+        : moment.now();
+      // if dateToTest will always be in past, use currDate as the base to diff, else
+      //be prepared to handle the negative outcomes.
+      var result = currDate.diff(dateToTest, "days");
+
+      return -result;
+    },
+    curingTime() {
+      if (!this.formData.date5) return null;
+      var currDate = moment(this.formData.date5);
+      var dateToTest = this.formData.date6
+        ? moment(this.formData.date6)
+        : moment.now();
+      // if dateToTest will always be in past, use currDate as the base to diff, else
+      //be prepared to handle the negative outcomes.
+      var result = currDate.diff(dateToTest, "days");
+
+      return -result;
+    },
+    timeToHarvest() {
+      return this.formData.time * 1 - this.floweringTime;
+    },
+    growTime() {
+      return this.germinationTime * 1 + this.veggingTime * 1;
+    },
+    aliveTime() {
+      return this.germinationTime * 1 + this.veggingTime * 1 + this.floweringTime * 1;
     }
   }
 };
