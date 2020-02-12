@@ -1,5 +1,8 @@
 <template>
   <div>
+    <ListItem v-if="false" v-for="formData in trees"
+      :key="formData.id" :formData="formData" />
+
     <v-card
       class="mb-2"
       outlined
@@ -11,6 +14,7 @@
         {{ formData.name }}
       </v-card-title>
       <v-card-text>
+        <div> {{ formData }} </div>
         {{ formData.date1 }}<br />
        
       </v-card-text>
@@ -46,8 +50,12 @@
 
 <script>
 import { mapState } from "vuex";
+import ListItem from "./list-item";
 
 export default {
+  components: {
+    ListItem
+  },
   data() {
     return {};
   },
